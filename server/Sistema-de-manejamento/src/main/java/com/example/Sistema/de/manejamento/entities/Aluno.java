@@ -2,6 +2,8 @@ package com.example.Sistema.de.manejamento.entities;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 
 import java.util.Objects;
 
@@ -10,8 +12,14 @@ public class Aluno {
 
     @Id
     private Integer ra;
+
+    @NotBlank
     private String nome;
+
+    @NotBlank
     private String senha;
+
+    @Email
     private String email;
 
     public Aluno() {
