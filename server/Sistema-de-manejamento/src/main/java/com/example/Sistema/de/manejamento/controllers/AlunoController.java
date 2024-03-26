@@ -5,13 +5,11 @@ import com.example.Sistema.de.manejamento.services.AlunoService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/aluno")
@@ -21,6 +19,16 @@ public class AlunoController {
     @Autowired
     private AlunoService alunoService;
 
+    @GetMapping
+    public ResponseEntity<List<Aluno>> findAll(){
+        return ResponseEntity.ok(alunoService.findAll());
+    }
+
+    @GetMapping(value = "/{ra}")
+    public ResponseEntity<Aluno>findByRA(@PathVariable Integer ra){
+
+        return ResponseEntity.ok(alunoService.findByRA(ra));
+    }
 
     @PostMapping
     public ResponseEntity<Aluno> create(@Valid @RequestBody Aluno aluno){
@@ -28,4 +36,13 @@ public class AlunoController {
                 .buildAndExpand(aluno.getRa()).toUri();
         return ResponseEntity.created(uri).body(alunoService.create(aluno));
     }
+
+    @DeleteMapping(value = "/{ra}")
+    public ResponseEntity<Void> deleteById(@PathVariable Integer ra){
+        alunoService.delete(ra);
+        return ResponseEntity.noContent().build();
+    }
+
+
+
 }
