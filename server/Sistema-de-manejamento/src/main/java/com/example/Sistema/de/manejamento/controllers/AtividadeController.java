@@ -12,7 +12,8 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping(value="/atividade")
+@RequestMapping(value="/atividades")
+@CrossOrigin(origins = "http://localhost:5173")
 public class AtividadeController {
 
     @Autowired

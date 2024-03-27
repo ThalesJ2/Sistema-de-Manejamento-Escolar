@@ -3,11 +3,15 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import TelaAluno from './components/telas/TelaAluno';
 import TelaAtividades from './components/telas/TelaAtividades';
 import Pagina from './context/Pagina';
+import { Provider } from "react-redux";
+import store from "./redux/store";
+
 function App() {
 
 
   return (
     <>
+    <Provider store={store}>
          <BrowserRouter>
           <Routes>
             {
@@ -22,6 +26,7 @@ function App() {
   
           </Routes>
         </BrowserRouter>
+      </Provider>
     </>
 
   )

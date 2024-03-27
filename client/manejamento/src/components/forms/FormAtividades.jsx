@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { useDispatch} from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Container, Form, Row, Col, Button, FloatingLabel } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import { addAtividade } from '../../redux/atividadeReducer';
 
 export default function FormAtividades(){
 
@@ -16,15 +17,44 @@ export default function FormAtividades(){
 
         if (value === '' || regex.test(value)) {
             setPeso(value);
+            setAtividade({...atividade, peso: value});
         }
     };
+
+    const atividadeVazia = {
+        nome:'',
+        descricao:'',
+        peso:''
+    }
+
+    const [atividade, setAtividade] = useState(atividadeVazia);
+
+    const dispatch = useDispatch();
+
+    function manipularMudancas(e){
+        const componente = e.currentTarget;
+        setAtividade({...atividade,[componente.name]:componente.value});
+    }
+
+    function manipularSubmissao(e){
+
+        e.preventDefault();
+
+        dispatch(addAtividade(atividade));
+
+        
+        e.stopPropagation();
+        setAtividade(atividadeVazia);
+        setPeso("");       
+
+    }
 
     return (
             
         <Container>
             <h2 style={{ textAlign: 'center' }}>Cadastro de Atividades</h2>
             <br></br>
-            <Form noValidate >
+            <Form noValidate onSubmit={manipularSubmissao}>
                 <Row>
                     <Col>
                         <Form.Group className="col-md-12">
@@ -38,8 +68,8 @@ export default function FormAtividades(){
                                     id="nome"
                                     name="nome"
                                     maxLength={30}
-                                  //  value={categoria.descricao}
-                                  //  onChange={manipularMudancas}
+                                    value={atividade.nome}
+                                    onChange={manipularMudancas}
                                     required />
                             </FloatingLabel>
                             <Form.Control.Feedback type="invalid">Informe o nome da atividade.</Form.Control.Feedback>
@@ -78,8 +108,8 @@ export default function FormAtividades(){
                                     placeholder=""
                                     id="descricao"
                                     name="descricao"
-                                  //  value={categoria.descricao}
-                                  //  onChange={manipularMudancas}
+                                    value={atividade.descricao}
+                                    onChange={manipularMudancas}
                                     required />
                             </FloatingLabel>
                             <Form.Control.Feedback type="invalid">Informe a descrição da atividade.</Form.Control.Feedback>
@@ -88,7 +118,7 @@ export default function FormAtividades(){
                 </Row>
                 <Row>
                     <Col md={6} offset={5} className="d-flex justify-content-end">
-                        <Button type="submit" variant={"primary"}>Enviar</Button>
+                        <Button type="submit" variant={"primary"} >Enviar</Button>
                     </Col>
                     <Col md={6} offset={5}>
                         <Button type="button" variant={"secondary"} onClick={() => {

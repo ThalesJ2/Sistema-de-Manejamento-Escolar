@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^2.2.2",
     "bootstrap": "^5.3.3",
     "mdb-react-ui-kit": "^7.2.0",
     "mdbreact": "^5.2.0",
