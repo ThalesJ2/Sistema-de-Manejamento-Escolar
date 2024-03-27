@@ -39,5 +39,5 @@ public class AlunoService {
             throw new ResourceNotFoundException("Aluno não encontrado");
         alunoRepository.deleteById(ra);
 
-    }
+   }
 }
