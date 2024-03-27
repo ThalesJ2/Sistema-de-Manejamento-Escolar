@@ -12,7 +12,7 @@ export default function FormAtividades(){
 
     const validaNota = (e) => {
         const { value } = e.target;
-        // Regex para validar a nota
+        // Regex para validar a nota permitir somente 0 a 10 e . e duas casas decimais
         const regex = /^(10(\.0{1,2})?|([0-9](\.\d{1,2})?))$/;
 
         if (value === '' || regex.test(value)) {
@@ -40,17 +40,28 @@ export default function FormAtividades(){
 
         e.preventDefault();
 
-        dispatch(addAtividade(atividade));
+        //Tudo isso e para saber se foi bem sucedido ou nao a insercao
 
+        async function submit(){
+        try{
+
+            await dispatch(addAtividade(atividade)).unwrap();
+            alert("Atividade incluida com sucesso.");
+
+        }catch(erro){
+            alert("ERRO:"+erro);
+        };
+
+        }
         
-        e.stopPropagation();
-        setAtividade(atividadeVazia);
-        setPeso("");       
+        submit().then(() => {
+            setAtividade(atividadeVazia);
+            setPeso("");   
+        });   
 
     }
 
-    return (
-            
+    return (         
         <Container>
             <h2 style={{ textAlign: 'center' }}>Cadastro de Atividades</h2>
             <br></br>

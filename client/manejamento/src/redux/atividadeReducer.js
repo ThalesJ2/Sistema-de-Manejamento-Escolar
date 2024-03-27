@@ -9,12 +9,8 @@ export const addAtividade = createAsyncThunk('addAtividade', async (atividade) =
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(atividade)
-    }).catch(erro => {
-        return {
-            status: false,
-            mensagem: 'ERRO: ' + erro.message
-        }
     });
+
     if (resposta.ok) {
         const dados = await resposta.json();
         return {
@@ -24,11 +20,8 @@ export const addAtividade = createAsyncThunk('addAtividade', async (atividade) =
         }
     }
     else {
-        return {
-            status: false,
-            mensagem: 'ERRO: ',
-            atividade
-        }
+        const erroTexto = await resposta.text();
+        throw new Error(erroTexto || 'ERRO: Algo deu errado ao adicionar a atividade.');      
     }
 });
 
