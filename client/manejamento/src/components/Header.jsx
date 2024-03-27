@@ -18,7 +18,7 @@ export default function App() {
           <hr className='text-white' />
           <h5 className='text-white h6'>Materia</h5>
           <hr className='text-white' />
-          <h5 className='text-white h6'>Atividades</h5>
+          <a href="/atividades" className="text-white text-decoration-none h5">Atividades</a>
         </div>
       </MDBCollapse>
       <MDBNavbar dark bgColor='dark'>
