@@ -45,7 +45,7 @@ public class ProfessorController {
 
     @PutMapping(value="/{id}")
     public ResponseEntity<Professor> update(@PathVariable Integer id, @Valid @RequestBody Professor professor){
-        professor = ativService.update(id, professor);
+        professor = profService.update(id, professor);
 
         return ResponseEntity.ok(professor);
     }

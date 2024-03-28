@@ -42,7 +42,7 @@ public class ProfessorService {
     @Transactional
     public Professor update(Integer id, Professor professor){
         try{
-            Atividade entity = profRepository.getReferenceById(id);
+            Professor entity = profRepository.getReferenceById(id);
 
             entity.setNome(professor.getNome());
             entity.setSenha(professor.getSenha());
