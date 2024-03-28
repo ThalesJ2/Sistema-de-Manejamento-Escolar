@@ -1,1 +1,0 @@
-INSERT INTO aluno (ra, nome, senha, email) VALUES (101224745, 'joao', '123', 'luiz@a');
