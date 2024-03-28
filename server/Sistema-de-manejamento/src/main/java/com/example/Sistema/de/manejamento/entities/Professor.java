@@ -1,42 +1,35 @@
 package com.example.Sistema.de.manejamento.entities;
 
 public class Professor {
-    private int RP;
+
+    @Id
+    private Integer id;
+
+    @NotBlank
     private String nome;
-    private String cpf;
-    private String endereco;
-    private int telefone;
-    private String formacao;
+
+    @NotBlank
     private String senha;
 
-    public Professor(int RP, String nome, String cpf, String endereco, int telefone, String formacao, String senha) {
-       setRP(RP);
-       setNome(nome);
-       setCpf(cpf);
-       setEndereco(endereco);
-       setTelefone(telefone);
-       setFormacao(formacao);
-       setSenha(senha);
+    @NotBlank
+    private String formacao;
+
+    public Aluno() {
     }
 
-    public Professor(String nome, String cpf, String endereco, int telefone, String formacao, String senha) {
-        setNome(nome);
-        setCpf(cpf);
-        setEndereco(endereco);
-        setTelefone(telefone);
-        setFormacao(formacao);
-        setSenha(senha);
+    public Aluno(Integer ra, String nome, String senha, String formacao) {
+        this.ra = ra;
+        this.nome = nome;
+        this.senha = senha;
+        this.formacao = formacao;
     }
 
-    public Professor() {
+    public Integer getRa() {
+        return ra;
     }
 
-    public int getRP() {
-        return RP;
-    }
-
-    public void setRP(int RP) {
-        this.RP = RP;
+    public void setRa(Integer ra) {
+        this.ra = ra;
     }
 
     public String getNome() {
@@ -47,28 +40,12 @@ public class Professor {
         this.nome = nome;
     }
 
-    public String getCpf() {
-        return cpf;
+    public String getSenha() {
+        return senha;
     }
 
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-
-    public String getEndereco() {
-        return endereco;
-    }
-
-    public void setEndereco(String endereco) {
-        this.endereco = endereco;
-    }
-
-    public int getTelefone() {
-        return telefone;
-    }
-
-    public void setTelefone(int telefone) {
-        this.telefone = telefone;
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 
     public String getFormacao() {
@@ -79,11 +56,8 @@ public class Professor {
         this.formacao = formacao;
     }
 
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
+    @Override
+    public int hashCode() {
+        return Objects.hash(ra);
     }
 }
