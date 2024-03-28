@@ -1,5 +1,8 @@
 package com.example.Sistema.de.manejamento.entities;
 
+import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotBlank;
+
 public class Professor {
 
     @Id
@@ -14,22 +17,22 @@ public class Professor {
     @NotBlank
     private String formacao;
 
-    public Aluno() {
+    public Professor() {
     }
 
-    public Aluno(Integer ra, String nome, String senha, String formacao) {
-        this.ra = ra;
+    public Professor(Integer id, String nome, String senha, String formacao) {
+        this.id = id;
         this.nome = nome;
         this.senha = senha;
         this.formacao = formacao;
     }
 
-    public Integer getRa() {
-        return ra;
+    public Integer getId() {
+        return id;
     }
 
-    public void setRa(Integer ra) {
-        this.ra = ra;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getNome() {
@@ -54,10 +57,5 @@ public class Professor {
 
     public void setFormacao(String formacao) {
         this.formacao = formacao;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(ra);
     }
 }
