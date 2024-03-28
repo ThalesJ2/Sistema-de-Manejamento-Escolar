@@ -39,10 +39,17 @@ public class AtividadeController {
         return ResponseEntity.ok(ativService.findAll());
     }
 
-    @GetMapping(value = "/{id}")
-    public ResponseEntity<Atividade>findById(@PathVariable Integer id){
+    @GetMapping(value = "/{nome}")
+    public ResponseEntity<Atividade>findByNome(@PathVariable String nome){
 
-        return ResponseEntity.ok(ativService.findById(id));
+        return ResponseEntity.ok(ativService.findByName(nome));
+    }
+
+    @PutMapping(value="/{id}")
+    public ResponseEntity<Atividade> update(@PathVariable Integer id, @Valid @RequestBody Atividade atividade){
+        atividade = ativService.update(id, atividade);
+
+        return ResponseEntity.ok(atividade);
     }
 
 }

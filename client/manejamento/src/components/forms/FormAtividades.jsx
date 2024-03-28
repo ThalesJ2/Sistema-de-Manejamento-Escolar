@@ -2,13 +2,15 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Container, Form, Row, Col, Button, FloatingLabel } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { addAtividade } from '../../redux/atividadeReducer';
+import { addAtividade, updateAtividades } from '../../redux/atividadeReducer';
+import TabAtividades from '../tabelas/tabAtividades'
 
 export default function FormAtividades(){
 
     const navigate = useNavigate();
 
     const [peso, setPeso] = useState('');
+    const [exibirForm, setExibirForm] = useState(true);
 
     const validaNota = (e) => {
         const { value } = e.target;
@@ -20,6 +22,17 @@ export default function FormAtividades(){
             setAtividade({...atividade, peso: value});
         }
     };
+
+    function EditarAtividade(atividade) {
+        const editAtividade = {
+            id: atividade.id,
+            nome: atividade.nome,
+            descricao: atividade.descricao,
+            peso: atividade.peso.toString()
+        }
+        setPeso(editAtividade.peso); //Isso e porque o peso esta sendo controlado por um estado diferente do resto do objeto por conta da validacao
+        setAtividade(editAtividade);
+    }
 
     const atividadeVazia = {
         nome:'',
@@ -44,9 +57,15 @@ export default function FormAtividades(){
 
         async function submit(){
         try{
+            if(atividade.id===''){
+                await dispatch(addAtividade(atividade)).unwrap();
+                alert("Atividade incluida com sucesso.");
+            }
+            else{
+                await dispatch(addAtividade(atividade)).unwrap();
+                alert("Atividade atualizada com sucesso.");
 
-            await dispatch(addAtividade(atividade)).unwrap();
-            alert("Atividade incluida com sucesso.");
+            }
 
         }catch(erro){
             alert("ERRO:"+erro);
@@ -63,82 +82,91 @@ export default function FormAtividades(){
 
     return (         
         <Container>
-            <h2 style={{ textAlign: 'center' }}>Cadastro de Atividades</h2>
-            <br></br>
-            <Form noValidate onSubmit={manipularSubmissao}>
-                <Row>
-                    <Col>
-                        <Form.Group className="col-md-12">
-                            <FloatingLabel
-                                label="Nome da Atividade"
-                                className="mb-3"
-                            >
-                                <Form.Control
-                                    type="text"
-                                    placeholder=""
-                                    id="nome"
-                                    name="nome"
-                                    maxLength={30}
-                                    value={atividade.nome}
-                                    onChange={manipularMudancas}
-                                    required />
-                            </FloatingLabel>
-                            <Form.Control.Feedback type="invalid">Informe o nome da atividade.</Form.Control.Feedback>
-                        </Form.Group>
-                    </Col>
-                    <Col>
-                        <Form.Group className="col-md-2">
-                            <FloatingLabel
-                                label="Peso"
-                                className="mb-3"        
-                            >
-                                <Form.Control                
-                                    type="number"
-                                    placeholder=""
-                                    id="peso"
-                                    name="peso"
-                                    max="10"
-                                    min="0"                                    
-                                    value={peso}
-                                    onChange={validaNota}
-                                    required />
-                            </FloatingLabel>
-                            <Form.Control.Feedback type="invalid">Informe o peso da atividade.</Form.Control.Feedback>
-                        </Form.Group>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col>
-                        <Form.Group>
-                            <FloatingLabel 
-                                label="Descrição"
-                                className="mb-3"
-                            >
-                                <Form.Control as="textarea" style={{ height:"50%"}} 
-                                    rows="20"
-                                    placeholder=""
-                                    id="descricao"
-                                    name="descricao"
-                                    value={atividade.descricao}
-                                    onChange={manipularMudancas}
-                                    required />
-                            </FloatingLabel>
-                            <Form.Control.Feedback type="invalid">Informe a descrição da atividade.</Form.Control.Feedback>
-                        </Form.Group>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col md={6} offset={5} className="d-flex justify-content-end">
-                        <Button type="submit" variant={"primary"} >Enviar</Button>
-                    </Col>
-                    <Col md={6} offset={5}>
-                        <Button type="button" variant={"secondary"} onClick={() => {
-                           navigate('/')
-                        }
-                        }>Voltar</Button>
-                    </Col>
-                </Row>
-            </Form>
+
+            {
+                exibirForm ?(
+                    <Form noValidate onSubmit={manipularSubmissao}>
+                        <h2 style={{ textAlign: 'center' }}>Cadastrar Atividade</h2>
+                        <hr></hr>
+                        <Row>
+                            <Col>
+                                <Form.Group className="col-md-12">
+                                    <FloatingLabel
+                                        label="Nome da Atividade"
+                                        className="mb-3"
+                                    >
+                                        <Form.Control
+                                            type="text"
+                                            placeholder=""
+                                            id="nome"
+                                            name="nome"
+                                            maxLength={30}
+                                            value={atividade.nome}
+                                            onChange={manipularMudancas}
+                                            required />
+                                    </FloatingLabel>
+                                    <Form.Control.Feedback type="invalid">Informe o nome da atividade.</Form.Control.Feedback>
+                                </Form.Group>
+                            </Col>
+                            <Col>
+                                <Form.Group className="col-md-2">
+                                    <FloatingLabel
+                                        label="Peso"
+                                        className="mb-3"        
+                                    >
+                                        <Form.Control                
+                                            type="number"
+                                            placeholder=""
+                                            id="peso"
+                                            name="peso"
+                                            max="10"
+                                            min="0"                                    
+                                            value={peso}
+                                            onChange={validaNota}
+                                            required />
+                                    </FloatingLabel>
+                                    <Form.Control.Feedback type="invalid">Informe o peso da atividade.</Form.Control.Feedback>
+                                </Form.Group>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <Form.Group>
+                                    <FloatingLabel 
+                                        label="Descrição"
+                                        className="mb-3"
+                                    >
+                                        <Form.Control as="textarea" style={{ height:"50%"}} 
+                                            rows="20"
+                                            placeholder=""
+                                            id="descricao"
+                                            name="descricao"
+                                            value={atividade.descricao}
+                                            onChange={manipularMudancas}
+                                            required />
+                                    </FloatingLabel>
+                                    <Form.Control.Feedback type="invalid">Informe a descrição da atividade.</Form.Control.Feedback>
+                                </Form.Group>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col md={{ span: 2, offset: 5 }} className="d-flex justify-content-center gap-2">
+                                <Button type="submit" variant={"primary"} >Enviar</Button>
+
+                                <Button type="button" variant={"secondary"} onClick={() => {
+                                navigate('/')
+                                }
+                                }>Voltar</Button>
+                                <Button type="button" variant="info" onClick={() => setExibirForm(false)}>Consultar</Button>
+                            </Col>
+                        </Row> 
+                    </Form>
+                        ) : (  
+                               <>  
+                                <TabAtividades setExibirForm={setExibirForm} onEditarAtividade={EditarAtividade}/>
+                               </>   
+                            )
+            }            
         </Container>
     );
 }

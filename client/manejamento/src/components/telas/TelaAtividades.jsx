@@ -3,6 +3,7 @@ import Pagina from "../../context/Pagina";
 import FormAtividades from "../forms/FormAtividades";
 
 export default function TelaAluno(){
+    
     return (
         <>
         <Pagina />

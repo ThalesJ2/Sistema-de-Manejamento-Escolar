@@ -25,16 +25,17 @@ export const addAtividade = createAsyncThunk('addAtividade', async (atividade) =
     }
 });
 
+
 export const buscarAtividades = createAsyncThunk('buscarAtividades', async () => {
     try {
         const resposta = await fetch(urlBase, { 
             method: 'GET' 
         });
         const dados = await resposta.json();
-        if (dados.status) {
+        if (resposta.status==200) {
             return {
                 status: true,
-                listaAtividades: dados.listaAtividades,
+                listaAtividades: dados,
                 mensagem: ''
             }
         }
@@ -55,7 +56,7 @@ export const buscarAtividades = createAsyncThunk('buscarAtividades', async () =>
 });
 
 export const updateAtividades = createAsyncThunk('updateAtividades', async (atividade) => {
-    const resposta = await fetch(urlBase, {
+    const resposta = await fetch(`${urlBase}/${atividade.id}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -85,12 +86,12 @@ export const updateAtividades = createAsyncThunk('updateAtividades', async (ativ
 });
 
 export const deleteAtividade = createAsyncThunk('deleteAtividade', async (atividade) => {
-    const resposta = await fetch(urlBase, {
+    const resposta = await fetch(`${urlBase}/${atividade.id}`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(atividade)
+        //body: JSON.stringify(atividade)
     }).catch(erro => {
         return {
             status: false,
