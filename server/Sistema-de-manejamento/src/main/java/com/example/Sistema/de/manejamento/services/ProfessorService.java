@@ -33,6 +33,11 @@ public class ProfessorService {
     }
 
     @Transactional
+    public Atividade findByName(String nome){
+        return profRepository.findByNome(nome).orElseThrow(()-> new ResourceNotFoundException("Professor não encontrado."));
+    }
+
+    @Transactional
     public void delete(Integer id){
         if(!profRepository.existsById(id))
             throw new ResourceNotFoundException("Professor não encontrado");
