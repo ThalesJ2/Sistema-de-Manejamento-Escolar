@@ -43,6 +43,12 @@ public class ProfessorController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping(value = "/{nome}")
+    public ResponseEntity<Professor>findByNome(@PathVariable String nome){
+
+        return ResponseEntity.ok(profService.findByName(nome));
+    }
+
     @PutMapping(value="/{id}")
     public ResponseEntity<Professor> update(@PathVariable Integer id, @Valid @RequestBody Professor professor){
         professor = profService.update(id, professor);
