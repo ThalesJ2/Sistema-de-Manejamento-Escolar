@@ -5,6 +5,7 @@ import TelaAtividades from './components/telas/TelaAtividades';
 import Pagina from './context/Pagina';
 import { Provider } from "react-redux";
 import store from "./redux/store";
+import TelaMateria from './components/telas/TelaMateria';
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
             }
             <Route path="/alunos" element={<TelaAluno />} />
             <Route path="/atividades" element={<TelaAtividades />} />
+            <Route path="/materias" element={<TelaMateria />} />
             <Route path="/" element={<Pagina />} />
             {
              

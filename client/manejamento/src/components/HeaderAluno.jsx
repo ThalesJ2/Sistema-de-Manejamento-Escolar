@@ -17,7 +17,28 @@ function HeaderAluno({setExibirForm}) {
         <hr className='text-white' />
       </li>
       <li style={{ marginLeft: 'auto', marginRight: 'auto', textAlign: 'center' }}>
-        <h5 className='text-white h6'>Cadastrar</h5>
+      <Button
+          type="button"
+          variant="info"
+          onClick={() => setExibirForm(true)
+           
+          }
+          style={{
+            fontSize: '1.25rem', // 
+            fontWeight: 'bold', // 
+            textDecoration: 'none', //
+            color: 'white', // 
+            backgroundColor: 'transparent', 
+            border: 'none', // 
+            padding: '0', 
+            cursor: 'pointer', //
+            outline: 'none', //
+            display: 'block', // 
+            width: '100%', // 
+          }}
+        >
+          Cadastrar
+          </Button>
       </li>
       <li style={{ marginLeft: 'auto', marginRight: 'auto', textAlign: 'center' }}>
         <hr className='text-white' />

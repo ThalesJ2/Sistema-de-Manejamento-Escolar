@@ -16,7 +16,7 @@ export default function App() {
           <hr className='text-white' />
           <h5 className='text-white h6'>Professores</h5>
           <hr className='text-white' />
-          <h5 className='text-white h6'>Materia</h5>
+          <a href="/materias" className="text-white text-decoration-none h5">Materias</a>
           <hr className='text-white' />
           <a href="/atividades" className="text-white text-decoration-none h5">Atividades</a>
         </div>
