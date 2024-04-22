@@ -40,10 +40,11 @@ export default function FormMateria() {
 
     async function submit() {
       try {
-        if (materia.id !== '') {
+        if (materia.id != null) {
           await dispatch(updateMateria(materia)).unwrap();
-          alert('Matéria atualizada com sucesso!');
+          alert('Materia cadastrada com sucesso');
         } else {
+          console.log("fsdf");
           await dispatch(createMateria(materia)).unwrap();
           alert('Matéria cadastrada com sucesso!');
         }

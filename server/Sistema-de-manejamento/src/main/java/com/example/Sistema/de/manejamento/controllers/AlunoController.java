@@ -46,7 +46,6 @@ public class AlunoController {
     @PutMapping(value="/{ra}")
     public ResponseEntity<Aluno> update(@PathVariable Integer ra, @Valid @RequestBody Aluno aluno){
         aluno = alunoService.update(ra, aluno);
-        System.out.println("commit");
         return ResponseEntity.ok(aluno);
     }
 

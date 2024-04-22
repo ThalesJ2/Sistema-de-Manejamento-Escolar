@@ -3,6 +3,7 @@ package com.example.Sistema.de.manejamento.services;
 import com.example.Sistema.de.manejamento.entities.Aluno;
 
 import com.example.Sistema.de.manejamento.repositories.AlunoRepository;
+import com.example.Sistema.de.manejamento.services.exceptions.ResourceBadRequestException;
 import jakarta.persistence.EntityNotFoundException;
 
 import com.example.Sistema.de.manejamento.services.exceptions.ResourceNotFoundException;
@@ -22,7 +23,12 @@ public class AlunoService {
 
    @Transactional
     public Aluno create(Aluno aluno){
-        return  alunoRepository.save(aluno);
+
+        if(alunoRepository.findById(aluno.getRa()).isEmpty()){
+            return  alunoRepository.save(aluno);
+        }
+
+        throw new ResourceBadRequestException("Ra ja cadastrado");
     }
 
     @Transactional(readOnly = true)

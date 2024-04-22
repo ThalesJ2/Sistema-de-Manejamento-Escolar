@@ -12,6 +12,7 @@ export default function FormAluno() {
     senha: '',
     email: '',
   };
+
   const [aluno, setAluno] = useState(alunoVazio);
   const [textoBotao, setTextoBotao] = useState('Cadastrar');
   const [title, setTitle] = useState('Cadastro de Alunos');
@@ -57,7 +58,9 @@ export default function FormAluno() {
   async function manipularSubmissao(e) {
     e.preventDefault();
     try {
-      if (aluno.ra !== '') {
+      let n = {title}
+      console.log(n.title);
+      if (n.title != "Cadastro de Alunos") {
         await dispatch(updateAluno(aluno)).unwrap();
         alert('Aluno atualizado com sucesso!');
       } else {
