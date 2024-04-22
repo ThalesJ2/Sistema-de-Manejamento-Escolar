@@ -59,6 +59,7 @@ export const updateAluno = createAsyncThunk('updateAluno', async (aluno) => {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(aluno)
+
     }).catch(erro => {
         return {
             status: false,
@@ -67,6 +68,7 @@ export const updateAluno = createAsyncThunk('updateAluno', async (aluno) => {
     });
     if (resposta.ok) {
         const dados = await resposta.json();
+        console.log(dados);
         return {
             status: dados.status,
             mensagem: dados.mensagem,
@@ -157,8 +159,8 @@ const alunoSlice = createSlice({
             state.estado = ESTADO.ERRO;
         }).addCase(updateAluno.fulfilled, (state, action) => {
             state.estado = ESTADO.OCIOSO;
-            const indice = state.atividades.findIndex(atividade => atividade.id === action.payload.atividade.id);
-            state.atividades[indice] = action.payload.atividade;
+            const indice = state.alunos.findIndex(aluno => aluno.ra === action.payload.aluno.ra);
+            state.alunos[indice] = action.payload.aluno;
             state.mensagem = action.payload.mensagem;
         }).addCase(updateAluno.pending, (state, action) => {
             state.estado = ESTADO.PENDENTE;
@@ -169,7 +171,7 @@ const alunoSlice = createSlice({
         }).addCase(deleteAluno.fulfilled, (state, action) => {
             state.estado = ESTADO.OCIOSO;
             state.mensagem = action.payload.mensagem;
-            state.alunos = state.alunos.filter(aluno => aluno.ra !== action.payload.aluno.id);
+            state.alunos = state.alunos.filter(aluno => aluno.ra !== action.payload.aluno.ra);
         }).addCase(deleteAluno.pending, (state, action) => {
             state.estado = ESTADO.PENDENTE;
             state.mensagem = "Removendo.";

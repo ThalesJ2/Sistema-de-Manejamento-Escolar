@@ -1,11 +1,13 @@
 import {configureStore} from '@reduxjs/toolkit';
 import atividadeSlice from './atividadeReducer';
 import alunoSlice from './AlunoReducer'
+import materiaSlice from "./MateriaReducer"
 
 const store = configureStore({
     reducer:{
         atividade: atividadeSlice,
-        aluno: alunoSlice
+        aluno: alunoSlice,
+        materia: materiaSlice
     }
 });
 
