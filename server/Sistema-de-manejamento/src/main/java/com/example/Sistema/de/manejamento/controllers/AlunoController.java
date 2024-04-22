@@ -1,6 +1,7 @@
 package com.example.Sistema.de.manejamento.controllers;
 
 import com.example.Sistema.de.manejamento.entities.Aluno;
+
 import com.example.Sistema.de.manejamento.services.AlunoService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,8 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/aluno")
+@RequestMapping(value = "/alunos")
+@CrossOrigin(origins = "http://localhost:5173")
 public class AlunoController {
 
 
@@ -26,7 +28,6 @@ public class AlunoController {
 
     @GetMapping(value = "/{ra}")
     public ResponseEntity<Aluno>findByRA(@PathVariable Integer ra){
-
         return ResponseEntity.ok(alunoService.findByRA(ra));
     }
 
@@ -42,7 +43,12 @@ public class AlunoController {
         alunoService.delete(ra);
         return ResponseEntity.noContent().build();
     }
+    @PutMapping(value="/{ra}")
+    public ResponseEntity<Aluno> update(@PathVariable Integer ra, @Valid @RequestBody Aluno aluno){
+        aluno = alunoService.update(ra, aluno);
 
+        return ResponseEntity.ok(aluno);
+    }
 
 
 }

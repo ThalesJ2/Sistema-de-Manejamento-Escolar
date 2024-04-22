@@ -1,8 +1,10 @@
 package com.example.Sistema.de.manejamento.services;
 
 import com.example.Sistema.de.manejamento.entities.Aluno;
+
 import com.example.Sistema.de.manejamento.repositories.AlunoRepository;
-import org.springframework.dao.DataIntegrityViolationException;
+import jakarta.persistence.EntityNotFoundException;
+
 import com.example.Sistema.de.manejamento.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,4 +42,20 @@ public class AlunoService {
         alunoRepository.deleteById(ra);
 
    }
+    @Transactional
+    public Aluno update(Integer id, Aluno aluno){
+        try{
+            Aluno a = alunoRepository.getReferenceById(id);
+
+            a.setNome(aluno.getNome());
+            a.setEmail(aluno.getSenha());
+
+            a = alunoRepository.save(a);
+
+            return a;
+        }
+        catch(EntityNotFoundException e){
+            throw new ResourceNotFoundException("Aluno não encontrada.");
+        }
+    }
 }
