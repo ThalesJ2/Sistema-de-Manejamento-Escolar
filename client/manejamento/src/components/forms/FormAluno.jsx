@@ -15,6 +15,7 @@ export default function FormAluno() {
   const [aluno, setAluno] = useState(alunoVazio);
   const [textoBotao, setTextoBotao] = useState('Cadastrar');
   const [title, setTitle] = useState('Cadastro de Alunos');
+  const [isDisabled, setIsDisabled] = useState(false);
   const [exibirForm, setExibirForm] = useState(true);
   const dispatch = useDispatch();
 
@@ -25,6 +26,7 @@ export default function FormAluno() {
       senha: aluno.senha,
       email: aluno.email,
     };
+    setIsDisabled(!isDisabled);
     setTitle('Atualizar Aluno');
     setTextoBotao('Atualizar');
     setAluno(editAluno);
@@ -66,6 +68,7 @@ export default function FormAluno() {
     } catch (erro) {
       alert('ERRO: ' + erro);
     } finally {
+      setIsDisabled(isDisabled);
       setTitle('Cadastro de Aluno');
       setTextoBotao('Cadastrar');
       setAluno(alunoVazio);
@@ -91,6 +94,7 @@ export default function FormAluno() {
                     value={aluno.ra}
                     onChange={manipularMudancas}
                     required
+                    disabled={isDisabled}
                     className={aluno.ra ? 'is-valid' : 'is-invalid'}
                   />
                   <Form.Control.Feedback type="invalid">Campo obrigatório</Form.Control.Feedback>

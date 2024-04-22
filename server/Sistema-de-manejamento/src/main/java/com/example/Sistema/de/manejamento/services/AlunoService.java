@@ -49,7 +49,7 @@ public class AlunoService {
 
             a.setNome(aluno.getNome());
             a.setEmail(aluno.getSenha());
-
+            a.setSenha(a.getSenha());
             a = alunoRepository.save(a);
 
             return a;
