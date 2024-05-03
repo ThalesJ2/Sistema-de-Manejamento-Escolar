@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Container, Form, Row, Col, Button } from 'react-bootstrap';
-import HeaderAluno from '../HeaderAluno';
-import TabAluno from '../tabelas/TabAluno';
-import {createNota} from "../../redux/notaReducer.js";
+import HeaderNota from "../HeaderNota";
+import TabNotas from "../tabelas/TabNotas";
+import {createNota, updateNota} from "../../redux/notaReducer";
 export default function FormNotas(){
 
     const notaVazia = {
@@ -11,8 +11,22 @@ export default function FormNotas(){
     }
 
     const [nota, setNota] = useState(notaVazia);
+    const [textoBotao, setTextoBotao] = useState('Cadastrar');
+    const [title, setTitle] = useState('Cadastro de Notas');
+    const [isDisabled, setIsDisabled] = useState(false);
     const [exibirForm, setExibirForm] = useState(true);
     const dispatch = useDispatch();
+
+    function EditarNotas(nota){
+        const editNota = {
+            id: nota.id,
+            valor:nota.valor
+        };
+        setIsDisabled(!isDisabled);
+        setTitle('Atualizar Nota');
+        setTextoBotao('Atualizar');
+        setNota(editNota);
+    }
 
     function manipularMudancas(e){
         const componente = e.currentTarget;
@@ -25,14 +39,27 @@ export default function FormNotas(){
 
         async function submit(){
             try{
-
-                await dispatch(createNota(nota)).unwrap();
-                alert("Nota cadastrada com sucesso!");
-
+                let n = {title}
+                if(n.title!="Cadastro de Notas")
+                {
+                    await dispatch(updateNota(nota).unwrap());
+                    alert('Nota atualizada com sucesso');
+                }
+                else
+                {
+                    await dispatch(createNota(nota)).unwrap();
+                    alert("Nota cadastrada com sucesso!");
+                }
+                setExibirForm(false);
             }catch(erro){
                 alert("ERRO:"+erro);
             }
-
+            finally {
+                setIsDisabled(isDisabled);
+                setTitle('Cadastro de Notas');
+                setTextoBotao('Cadastrar');
+                setNota(notaVazia);
+            }
         }
 
         submit().then(() => {
@@ -73,10 +100,10 @@ export default function FormNotas(){
                             </Row>
                             <Row>
                                 <Col className="text-center">
-                                    <Button type="submit" variant={"primary"}>Cadastrar</Button>
+                                    <Button type="submit" variant={"primary"}>{textoBotao}</Button>
 
 
-                                    <HeaderAluno setExibirForm={setExibirForm}></HeaderAluno>
+                                    <HeaderNota setExibirForm={setExibirForm}></HeaderNota>
                                 </Col>
                             </Row>
                         </Form>
@@ -84,8 +111,8 @@ export default function FormNotas(){
                 </div>
             ):(
                 <>
-                    <HeaderAluno setExibirForm={setExibirForm}></HeaderAluno>
-                    <TabAluno setExibirForm={setExibirForm}/>
+                    <HeaderNota setExibirForm={setExibirForm}></HeaderNota>
+                    <TabNotas setExibirForm={setExibirForm} onEditarNotas={EditarNotas}/>
                 </>
             )
         }
